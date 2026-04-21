@@ -1,6 +1,9 @@
 // Typeable terminal widget. Supports a small fixed vocabulary of commands
 // that read from window.PROFILE / window.PANELS.
 
+let _k = 0;
+const nextKey = () => ++_k;
+
 const COMMANDS = {
   help: "list commands",
   ls:   "list sections",
@@ -30,61 +33,61 @@ function renderCommand(cmd, setLines) {
   if (!c) return;
 
   if (c === "help") {
-    out.push(<Line key={Math.random()}><span className="dim">available commands:</span></Line>);
+    out.push(<Line key={nextKey()}><span className="dim">available commands:</span></Line>);
     Object.entries(COMMANDS).forEach(([k, v]) => {
       out.push(
-        <Line key={Math.random()}>
+        <Line key={nextKey()}>
           <span className="accent">{k.padEnd(18)}</span><span className="dim">{v}</span>
         </Line>
       );
     });
   } else if (c === "ls") {
-    out.push(<Line key={Math.random()}><span className="dim">sections:</span></Line>);
-    out.push(<Line key={Math.random()}>about  experience  projects  systems  writing  resume</Line>);
+    out.push(<Line key={nextKey()}><span className="dim">sections:</span></Line>);
+    out.push(<Line key={nextKey()}>about  experience  projects  systems  writing  resume</Line>);
   } else if (c === "whoami") {
     const p = window.PROFILE;
-    out.push(<Line key={Math.random()}><b>{p.name}</b> — {p.title}</Line>);
-    out.push(<Line key={Math.random()}><span className="dim">{p.blurb}</span></Line>);
-    out.push(<Line key={Math.random()}><span className="dim">{p.based}</span></Line>);
+    out.push(<Line key={nextKey()}><b>{p.name}</b> — {p.title}</Line>);
+    out.push(<Line key={nextKey()}><span className="dim">{p.blurb}</span></Line>);
+    out.push(<Line key={nextKey()}><span className="dim">{p.based}</span></Line>);
   } else if (c === "cat about" || c === "about") {
     const s = window.PANELS.about.sections.filter(x => x.kind === "prose").slice(0, 2);
-    s.forEach(p => out.push(<Line key={Math.random()}>{p.body}</Line>));
+    s.forEach(p => out.push(<Line key={nextKey()}>{p.body}</Line>));
   } else if (c === "cat experience" || c === "experience") {
     const role = window.PANELS.experience.roles[0];
-    out.push(<Line key={Math.random()}><b>{role.company}</b> <span className="dim">· {role.dates}</span></Line>);
-    out.push(<Line key={Math.random()}><span className="dim">{role.title} — {role.context}</span></Line>);
+    out.push(<Line key={nextKey()}><b>{role.company}</b> <span className="dim">· {role.dates}</span></Line>);
+    out.push(<Line key={nextKey()}><span className="dim">{role.title} — {role.context}</span></Line>);
     role.bullets.slice(0, 3).forEach(b => {
-      out.push(<Line key={Math.random()}>• <span dangerouslySetInnerHTML={{ __html: b }} /></Line>);
+      out.push(<Line key={nextKey()}>• <span dangerouslySetInnerHTML={{ __html: b }} /></Line>);
     });
   } else if (c === "cat projects" || c === "projects") {
     window.PANELS.projects.items.forEach(p => {
-      out.push(<Line key={Math.random()}><span className="accent">▸ {p.name}</span></Line>);
-      out.push(<Line key={Math.random()}><span className="dim">  {p.meta}</span></Line>);
+      out.push(<Line key={nextKey()}><span className="accent">▸ {p.name}</span></Line>);
+      out.push(<Line key={nextKey()}><span className="dim">  {p.meta}</span></Line>);
     });
   } else if (c === "stack") {
     const entries = window.PANELS.about.sections.find(s => s.kind === "stack").entries;
     entries.forEach(([k, v]) => {
-      out.push(<Line key={Math.random()}><span className="accent">{k.padEnd(16)}</span>{v}</Line>);
+      out.push(<Line key={nextKey()}><span className="accent">{k.padEnd(16)}</span>{v}</Line>);
     });
   } else if (c === "uptime") {
-    out.push(<Line key={Math.random()}><b>5 yrs 3 mo</b> <span className="dim">· shipping to production</span></Line>);
-    out.push(<Line key={Math.random()}><span className="dim">2 companies · 3 countries' users · still on-call-calm</span></Line>);
+    out.push(<Line key={nextKey()}><b>5 yrs 3 mo</b> <span className="dim">· shipping to production</span></Line>);
+    out.push(<Line key={nextKey()}><span className="dim">2 companies · 3 countries' users · still on-call-calm</span></Line>);
   } else if (c === "contact") {
-    out.push(<Line key={Math.random()}>email: <span className="accent">{window.PROFILE.email}</span></Line>);
-    out.push(<Line key={Math.random()}><span className="dim">always the fastest way to reach me.</span></Line>);
+    out.push(<Line key={nextKey()}>email: <span className="accent">{window.PROFILE.email}</span></Line>);
+    out.push(<Line key={nextKey()}><span className="dim">always the fastest way to reach me.</span></Line>);
   } else if (c === "clear") {
     setLines([]);
     return;
   } else {
-    out.push(<Line key={Math.random()}><span className="dim">command not found:</span> {c}. <span className="dim">try</span> <span className="accent">help</span></Line>);
+    out.push(<Line key={nextKey()}><span className="dim">command not found:</span> {c}. <span className="dim">try</span> <span className="accent">help</span></Line>);
   }
 
   add([
-    <Line key={Math.random()}>
+    <Line key={nextKey()}>
       {prompt()} <span className="dim">~ $</span> {c}
     </Line>,
     ...out,
-    <Line key={Math.random()}>&nbsp;</Line>,
+    <Line key={nextKey()}>&nbsp;</Line>,
   ]);
 }
 

@@ -2,6 +2,7 @@
 
 function Flamegraph() {
   const trace = window.TRACE;
+  if (!trace) return <div style={{ fontFamily: 'var(--mono)', fontSize: 12, color: 'var(--graphite)' }}>no trace data available.</div>;
   const total = trace.totalMs;
   const [hover, setHover] = React.useState(null);
 

@@ -117,6 +117,7 @@ const PANELS = {
         title: "Senior Software Engineer",
         dates: "Mar 2024 — Nov 2025",
         context: "US health-insurance SaaS · 1M users · 8-person micro team",
+        trace: true,
         bullets: [
           "Designed and maintained scalable backend services in <b>Java 21 + Spring Boot</b>; contributed to architecture decisions and sprint planning.",
           "Led backend for an <b>event-driven email pipeline</b> (SES · S3 · SQS · Spring Boot) handling ~5,000 emails/day, designed to scale an order of magnitude further.",
@@ -328,7 +329,35 @@ const PANELS = {
   ceyentra: { kicker: "INSTANCE / ceyentra", title: "Ceyentra Technologies", hint: "dec 2020 — aug 2021", roleIndex: 2 },
 };
 
+// Trace data for the email pipeline flamegraph (used by the trace signature mode).
+const TRACE = {
+  totalMs: 420,
+  summary: "Email pipeline · ingest → parse → classify → notify → realtime. Total: 420 ms end-to-end.",
+  rows: [
+    { name: "SES ingest → S3 write",         depth: 0, start: 0,   end: 48,  kind: "sync",  note: "raw email stored durably" },
+    { name: "SQS publish (ingest→parse)",     depth: 0, start: 48,  end: 62,  kind: "async" },
+    { name: "parse handler",                  depth: 1, start: 62,  end: 130, kind: "sync",  note: "normalize envelope + attachments" },
+    { name: "S3 attachment read",             depth: 2, start: 70,  end: 118, kind: "async", note: "parallel read" },
+    { name: "SQS publish (parse→classify)",   depth: 1, start: 130, end: 144, kind: "async" },
+    { name: "classify handler",               depth: 1, start: 144, end: 230, kind: "sync",  note: "tenant lookup + policy match" },
+    { name: "mongo tenant query",             depth: 2, start: 150, end: 196, kind: "sync",  note: "indexed · sub-50ms" },
+    { name: "SQS publish (classify→notify)",  depth: 1, start: 230, end: 244, kind: "async" },
+    { name: "notify handler",                 depth: 1, start: 244, end: 320, kind: "sync",  note: "fan-out to account managers" },
+    { name: "mongo write (notification)",     depth: 2, start: 254, end: 298, kind: "sync" },
+    { name: "change stream → pub/sub",        depth: 2, start: 298, end: 340, kind: "async", note: "triggers realtime" },
+    { name: "ws fan-out (2 clients)",         depth: 3, start: 340, end: 420, kind: "async", note: "p95 < 500ms ✓" },
+  ],
+};
+
+// Add trace panel to PANELS
+PANELS.trace = {
+  kicker: "TRACE / email pipeline",
+  title: "Request trace",
+  hint: "one email · ingest → parse → classify → notify → realtime",
+};
+
 window.PROFILE = PROFILE;
 window.NODES = NODES;
 window.EDGES = EDGES;
 window.PANELS = PANELS;
+window.TRACE = TRACE;

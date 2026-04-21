@@ -38,6 +38,7 @@ function App() {
   const [tweaks, setTweaks] = React.useState(window.__TWEAKS__ || { theme: "paper", typography: "mixed", signature: "traffic", motion: "calm" });
   const [panel, setPanel] = React.useState(null);
   const [editMode, setEditMode] = React.useState(false);
+  const [tweaksOpen, setTweaksOpen] = React.useState(false);
 
   // Apply theme + typography to <html> for CSS variables.
   React.useEffect(() => {
@@ -61,7 +62,7 @@ function App() {
 
   // Esc closes drawer
   React.useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape') setPanel(null); };
+    const onKey = (e) => { if (e.key === 'Escape') closePanel(); };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, []);
@@ -72,8 +73,18 @@ function App() {
     window.parent && window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [k]: v } }, '*');
   };
 
-  const openPanel = (key) => setPanel(key);
-  const closePanel = () => setPanel(null);
+  const closePanelCallback = React.useRef(null);
+  const openPanel = (key, onCloseCallback) => {
+    setPanel(key);
+    closePanelCallback.current = onCloseCallback || null;
+  };
+  const closePanel = React.useCallback(() => {
+    setPanel(null);
+    if (closePanelCallback.current) {
+      closePanelCallback.current();
+      closePanelCallback.current = null;
+    }
+  }, []);
 
   // If signature tweak is set, auto-open the corresponding panel when user
   // clicks the masthead pill. Kept simple: clicking the meta opens that panel.
@@ -94,7 +105,14 @@ function App() {
       </div>
       <Footer />
       <window.Panel panelKey={panel} onClose={closePanel} onOpenOther={openPanel} />
-      <window.Tweaks tweaks={tweaks} setTweak={setTweak} visible={editMode} onClose={() => setEditMode(false)} />
+      <button
+        className="tweaks-toggle"
+        onClick={() => setTweaksOpen(o => !o)}
+        title="Customise appearance"
+      >
+        {tweaksOpen ? '✕ close' : '⊞ tweaks'}
+      </button>
+      <window.Tweaks tweaks={tweaks} setTweak={setTweak} visible={editMode || tweaksOpen} onClose={() => { setEditMode(false); setTweaksOpen(false); }} />
     </>
   );
 }

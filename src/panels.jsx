@@ -338,11 +338,12 @@ function Panel({ panelKey, onClose, onOpenOther }) {
 
   let body = null;
   if (panelKey === "about")       body = <ProsePanel data={data} />;
-  else if (panelKey === "experience") body = <ExperiencePanel data={data} openFlame={() => onOpenOther && onOpenOther("experience")} />;
+  else if (panelKey === "experience") body = <ExperiencePanel data={data} openFlame={() => onOpenOther && onOpenOther("trace")} />;
   else if (panelKey === "projects")   body = <ProjectsPanel data={data} />;
   else if (panelKey === "systems")    body = <SystemsPanel data={data} />;
   else if (panelKey === "writing")    body = <WritingPanel data={data} />;
   else if (panelKey === "terminal")   body = <TerminalWidget />;
+  else if (panelKey === "trace")      body = <window.Flamegraph />;
   else if (panelKey === "contact")    body = <ContactPanel />;
   else if (panelKey === "altrium" || panelKey === "zeroday" || panelKey === "ceyentra") {
     const role = window.PANELS.experience.roles[data.roleIndex];

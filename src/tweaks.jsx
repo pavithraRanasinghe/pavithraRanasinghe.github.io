@@ -46,7 +46,7 @@ function Tweaks({ tweaks, setTweak, visible, onClose }) {
           </div>
         ))}
         <div style={{ fontSize: 10, color: 'var(--graphite)', marginTop: 8, letterSpacing: '0.04em' }}>
-          open the <b>Tweaks</b> toggle in the toolbar to hide this panel.
+          changes apply instantly · session only
         </div>
       </div>
     </div>

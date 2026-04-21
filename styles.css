@@ -486,6 +486,25 @@ html[data-theme="paper"] .term .accent { color: oklch(0.82 0.12 55); }
 }
 .tweak-opt.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 
+/* ——— Tweaks toggle button ——— */
+.tweaks-toggle {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  padding: 5px 12px;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  z-index: 79;
+  text-transform: lowercase;
+  transition: background 160ms, color 160ms;
+}
+.tweaks-toggle:hover { background: var(--ink); color: var(--paper); }
+
 /* Drawer motion-intensity adjustment */
 html[data-motion="calm"] .particle { animation-duration: 6s !important; }
 html[data-motion="lively"] .particle { animation-duration: 2.2s !important; }
