@@ -16,7 +16,6 @@ function Tweaks({ tweaks, setTweak, visible, onClose }) {
     signature: [
       { v: "traffic", label: "traffic" },
       { v: "terminal", label: "terminal" },
-      { v: "trace", label: "trace" },
     ],
     motion: [
       { v: "calm", label: "calm" },
