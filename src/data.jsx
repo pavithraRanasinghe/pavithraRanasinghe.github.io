@@ -79,9 +79,9 @@ const PANELS = {
     title: "About",
     hint: "cat /me",
     sections: [
-      { kind: "prose", body: "Hi — I'm Pavithra. I design and build the quiet, load-bearing parts of software: the services that need to stay up at 3am, the queues that can't drop a message, the schemas that have to survive five more years of product decisions." },
-      { kind: "prose", body: "Most of my last five years have been spent on multi-tenant SaaS — US health insurance, Australian property management, Japanese ops tools — where the interesting problems live in the boring-sounding places: Mongo aggregation pipelines, Postgres schemas, SQS retry topologies, the exact spot a 2-second p95 hides." },
-      { kind: "prose", body: "I write Java (mostly 21, Spring Boot) for a living, but I'm happiest when the work is cross-cutting: designing, mentoring, reviewing, on-call, pairing with Claude or Codex for the repetitive bits. I lead a micro team and still ship code every week." },
+      { kind: "prose", body: "I'm a Senior Software Engineer with 5+ years of experience building scalable backend systems and SaaS platforms. My work has focused on Java, Spring Boot, distributed systems, and event-driven architectures, with hands-on experience designing reliable production systems, optimizing performance, and solving real-world engineering challenges at scale." },
+      { kind: "prose", body: "Over the years, I have worked on multi-tenant platforms, asynchronous processing systems, real-time status updates, and cloud-based backend services. I enjoy turning complex business requirements into practical technical solutions, while also thinking deeply about system design, maintainability, and long-term scalability." },
+      { kind: "prose", body: "Beyond implementation, I take pride in engineering ownership — from architecture decisions and production debugging to mentoring junior developers and improving development workflows. I'm especially interested in building systems that are reliable, observable, and designed with clear trade-offs in mind." },
       { kind: "stack", entries: [
         ["Languages",   "Java 21, TypeScript, JavaScript"],
         ["Frameworks",  "Spring Boot, React, Next.js, JUnit"],
