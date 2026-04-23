@@ -243,6 +243,13 @@ const PANELS = {
     hint: "short notes on LinkedIn · click to read the full thread",
     posts: [
       {
+        date: "2026 · 04",
+        title: "AI-native development is not vibe coding",
+        meta: "software engineering · ai-native · system design",
+        excerpt: "Why AI-native development is still an engineering discipline — architects stay in control, AI provides leverage. Covers requirement clarity, task decomposition, constraint definition, and the post-implementation review questions every engineer should ask.",
+        url: "https://www.linkedin.com/pulse/ai-native-development-vibe-coding-pavithra-ranasinghe-wsxpc",
+      },
+      {
         date: "2025 · 05",
         title: "Designing for failure: resilience patterns in microservices",
         meta: "microservices · system design · resilience",
